@@ -31,18 +31,8 @@ function findOne(haystack, arr) {
   return arr.some(v => haystack.includes(v));
 }
 
-function getMatches(arr1, arr2) {
-  var matchObj = {}, matched = [];
-  for (var i = 0, l = arr1.length; i < l; i++) {
-    matchObj[arr1[i]] = (matchObj[arr1[i]] || 0) + 1;
-  }
-  for (i = 0; i < arr2.length; i++) {
-    var val = arr2[i];
-    if (val in matchObj) {
-      matched.push(val);
-    }
-  }
-  return matched;
+function getOne(haystack, arr) {
+  return arr.find(v => haystack.includes(v));
 }
 
 function tags(client, evt, suffix) {
@@ -113,7 +103,7 @@ function tags(client, evt, suffix) {
           if (value) {
             let tags = body[randomid].tags.split(' ');
             if (findOne(blacklist, tags)) {
-              let matchBlackList = getMatches(blacklist, tags);
+              let blackListMatch = getOne(blacklist, tags);
               if (removeValue === 'true') {
                 blacklistHits++;
                 if (blacklistHits > 0 && currentPosition === count) {
@@ -123,7 +113,7 @@ function tags(client, evt, suffix) {
                 return;
               }
               file = null;
-              imageDescription = `**BLACKLISTED RESULT** - Link Contains: ${matchBlackList.join()} | **Link:** [Click Here](https://e621.net/post/show/${id})`;
+              imageDescription = `**BLACKLISTED RESULT** - Link Contains: ${blackListMatch} | **Link:** [Click Here](https://e621.net/post/show/${id})`;
             }
           }
 
