@@ -103,7 +103,6 @@ function tags(client, evt, suffix) {
           if (value) {
             let tags = body[randomid].tags.split(' ');
             if (findOne(blacklist, tags)) {
-              let blackListMatch = getOne(blacklist, tags);
               if (removeValue === 'true') {
                 blacklistHits++;
                 if (blacklistHits > 0 && currentPosition === count) {
@@ -113,7 +112,8 @@ function tags(client, evt, suffix) {
                 return;
               }
               file = null;
-              imageDescription = `**BLACKLISTED RESULT** - Link Contains: ${blackListMatch} | **Link:** [Click Here](https://e621.net/post/show/${id})`;
+              let blacklistMatch = getOne(blacklist, tags);
+              imageDescription = `**BLACKLISTED RESULT** - Link Contains: ${blacklistMatch} | **Link:** [Click Here](https://e621.net/post/show/${id})`;
             }
           }
 
